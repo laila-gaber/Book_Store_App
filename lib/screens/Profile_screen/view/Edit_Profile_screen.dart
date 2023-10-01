@@ -16,11 +16,11 @@ class EditProfileScreen extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ShowProfileCubit, ShowProfileState>(
-      listener: (context, ShowProfileState state) {
+    return BlocConsumer<EditProfileCubit, EditProfileState>(
+      listener: (context, EditProfileState state) {
         // TODO: implement listener
 
-        if(state is ShowProfileSucces){
+        if(state is EditProfileSuccess){
           BlocProvider.of<ShowProfileCubit>(context).GetProfileData();
           navto(context, UserProfileScreen());
         }
@@ -171,7 +171,7 @@ class EditProfileScreen extends StatelessWidget {
                     SizedBox(height: 10,),
                     ElevatedButton(
                       onPressed: () {
-                        if (formKey.currentState!.validate()&& EditProfileCubit.get(context).editmodel!=null) {
+                        if (formKey.currentState!.validate()) {
                           isvisible = true;
                           EditProfileCubit.get(context).editprofile(
                             name: nameController.text,

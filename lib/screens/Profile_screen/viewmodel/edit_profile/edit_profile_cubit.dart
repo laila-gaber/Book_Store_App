@@ -22,6 +22,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   void editprofile({required String name,required String email,required String phone,
     required String city, required String address,}) {
     emit(EditProfileLoading());
+    print('ana dakhalt el update');
     DioHelper.postData(
         url:ApiConst.UPDATE,
         token: CacheHelper.getData(key: "token"),

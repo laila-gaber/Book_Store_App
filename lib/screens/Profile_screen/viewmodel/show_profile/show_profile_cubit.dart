@@ -15,18 +15,16 @@ part 'show_profile_state.dart';
 class ShowProfileCubit extends Cubit<ShowProfileState> {
   ShowProfileCubit() : super(ShowProfileInitial());
   static ShowProfileCubit get(context) => BlocProvider.of(context);
-
   ShowProfileModel ? showProfileModel;
   final Dio dio=Dio();
   void GetProfileData()
   {
     print("Ana dakhaltttttttttttttttt");
     emit(ShowProfileLoading());
-
-    DioHelper.getData(url: ApiConst.SHOWPROFILE,
-        token: CacheHelper.getData(key: "token")
-    )
-        .then((response) {
+    DioHelper.getData(
+        url: ApiConst.SHOWPROFILE,
+        token: CacheHelper.getData(key:"token")
+    ).then((response) {
       showProfileModel = ShowProfileModel.fromJson(response.data);
       print("in user profile  sucessssssss");
 
