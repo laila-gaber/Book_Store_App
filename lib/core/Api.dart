@@ -7,6 +7,12 @@ class ApiConst{
   static const  String  BESTSELLER = '/products-bestseller';
   static const  String  CATEGORIES = '/categories';
   static const  String  NEWARRIVALS = '/products-new-arrivals';
+  static const  String  ALLBOOKS = '/products';
+  static const  String  BOOKDETAILS = '/products/';
+  static const  String  SHOWPROFILE = '/profile';
+  static const  String  UPDATE = '/update-profile';
+
+
 
 
 }

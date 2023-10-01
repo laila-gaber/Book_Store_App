@@ -4,7 +4,8 @@ import 'package:v_care_clinic/screens/Books_screen/view/Books_screen.dart';
 import 'package:v_care_clinic/screens/Cart_screen/view/Cart_screen.dart';
 import 'package:v_care_clinic/screens/Fav_screen/view/Fav_screen.dart';
 import 'package:v_care_clinic/screens/Home_screen/view/home_screen.dart';
-import 'package:v_care_clinic/screens/Profile_screen/view/Profile_screen.dart';
+import 'package:v_care_clinic/screens/Profile_screen/view/Edit_Profile_screen.dart';
+import 'package:v_care_clinic/screens/Profile_screen/view/User_Profile_Screen.dart';
 
 class Nav extends StatefulWidget {
    Nav({Key?key}):super(key: key);
@@ -20,7 +21,7 @@ class _NavState extends State<Nav> {
     BooksScreen(),
     FavScreen(),
     CartScreen(),
-    ProfileScreen(),
+    UserProfileScreen(),
   ];
   void _onpagechange(int index)
   {
