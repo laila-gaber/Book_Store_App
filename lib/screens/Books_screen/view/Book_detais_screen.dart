@@ -29,7 +29,7 @@ class BookDetailsScreen extends StatelessWidget {
                           cubit.showBookModel!.data!
                               .image!, // Replace with actual image URL
                           height: 200,
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         ),
                         SizedBox(height: 16),
                         Text(
@@ -56,7 +56,7 @@ class BookDetailsScreen extends StatelessWidget {
                                   cubit.showBookModel!.data!.price!,
                                   style: TextStyle(
                                       decoration: TextDecoration.lineThrough,
-                                      fontSize: 16,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.grey),
                                 ),
@@ -64,8 +64,9 @@ class BookDetailsScreen extends StatelessWidget {
                                   cubit.showBookModel!.data!.priceAfterDiscount!
                                       .toString(),
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.bold,
+                                    color: mainColor
                                   ),
                                 ),
                               ],

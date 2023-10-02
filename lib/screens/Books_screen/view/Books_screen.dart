@@ -64,6 +64,7 @@ class BooksScreen extends StatelessWidget {
                                                     Image.network(
                                                       cubit.allbooksModel!.data!
                                                           .products![i].image!,
+                                                      fit: BoxFit.fill,
                                                       height: 150,
                                                       width: 200,
                                                     ),
@@ -185,7 +186,7 @@ class BooksScreen extends StatelessWidget {
                                       ),
                                     ),
                                     onTap: (){
-                                      ShowBookCubit.get(context).GetBookDetails(i);
+                                      ShowBookCubit.get(context).GetBookDetails(cubit.allbooksModel!.data!.products![i].id!.toInt());
                                       navto(context, BookDetailsScreen(id: cubit.allbooksModel!.data!.products![i].id!.toInt()));
                                       print("id : $i");
                                     },
