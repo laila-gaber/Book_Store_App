@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:v_care_clinic/core/Colors.dart';
 import 'package:v_care_clinic/core/SharedFunctions.dart';
 import 'package:v_care_clinic/screens/Profile_screen/view/User_Profile_Screen.dart';
 import 'package:v_care_clinic/screens/Profile_screen/viewmodel/edit_profile/edit_profile_cubit.dart';
@@ -30,7 +31,7 @@ class EditProfileScreen extends StatelessWidget {
         return cubit.editmodel != null?
          Scaffold(
           appBar: AppBar(
-            backgroundColor: Color(0XFF174068),
+            backgroundColor: mainColor,
           ),
           body: SingleChildScrollView(
             child: Padding(
@@ -48,7 +49,7 @@ class EditProfileScreen extends StatelessWidget {
                     Text(
                       'Update your info and become a new you!',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 17,
                         color: Color(0XFF030E19),
                       ),
                       textAlign: TextAlign.center,
@@ -56,7 +57,7 @@ class EditProfileScreen extends StatelessWidget {
                     SizedBox(height: 20),
                     TextFormField(
                       controller: nameController,
-                      keyboardType: TextInputType.emailAddress,
+                      keyboardType: TextInputType.name,
                       validator: (String? value) {
                         if (value!.isEmpty) {
                           return 'Please enter your name';
@@ -184,7 +185,7 @@ class EditProfileScreen extends StatelessWidget {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0XFF174068),
+                        primary: mainColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(0),
                         ),
