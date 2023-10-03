@@ -11,6 +11,13 @@ class ApiConst{
   static const  String  BOOKDETAILS = '/products/';
   static const  String  SHOWPROFILE = '/profile';
   static const  String  UPDATE = '/update-profile';
+  static const  String  SHOWFAV = '/wishlist';
+  static const  String  ADDFAV = '/add-to-wishlist';
+  static const  String  REMOVEFAV = '/remove-from-wishlist';
+  static const  String  SHOWCART = '/cart';
+  static const  String  ADDTOCART = '/add-to-cart';
+  static const  String  UPDATECART = '/update-cart';
+  static const  String  REMOVECART = '/remove-from-cart';
 
 
 

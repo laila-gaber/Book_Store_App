@@ -6,6 +6,9 @@ import 'package:v_care_clinic/core/SharedFunctions.dart';
 import 'package:v_care_clinic/screens/Books_screen/view/Book_detais_screen.dart';
 import 'package:v_care_clinic/screens/Books_screen/view_model/allbook_view_model/all_books_cubit.dart';
 import 'package:v_care_clinic/screens/Books_screen/view_model/showbook_view_model/show_book_cubit.dart';
+import 'package:v_care_clinic/screens/Fav_screen/viewmodel/fav_cubit.dart';
+
+import '../../Cart_screen/viewmodel/cart_cubit.dart';
 
 class BooksScreen extends StatelessWidget {
   BooksScreen({super.key});
@@ -17,7 +20,6 @@ class BooksScreen extends StatelessWidget {
         // TODO: implement listener
       },
       builder: (context, state) {
-
         var cubit = AllBooksCubit.get(context);
         return cubit.allbooksModel != null
             ? cubit.allbooksModel!.data!.products!.isNotEmpty
@@ -57,9 +59,9 @@ class BooksScreen extends StatelessWidget {
                                             child: Column(
                                               children: [
                                                 Padding(
-                                                  padding:
-                                                      const EdgeInsets.symmetric(
-                                                          horizontal: 10.0),
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      horizontal: 10.0),
                                                   child: Stack(children: [
                                                     Image.network(
                                                       cubit.allbooksModel!.data!
@@ -92,7 +94,8 @@ class BooksScreen extends StatelessWidget {
                                                             fontSize: 15,
                                                             fontWeight:
                                                                 FontWeight.bold,
-                                                            color: Colors.white),
+                                                            color:
+                                                                Colors.white),
                                                       ),
                                                     ),
                                                   ]),
@@ -109,19 +112,19 @@ class BooksScreen extends StatelessWidget {
                                                   cubit.allbooksModel!.data!
                                                       .products![i].name!,
                                                   style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                    color: Colors.black,
-                                                    fontSize: 20
-                                                  ),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black,
+                                                      fontSize: 20),
                                                   textAlign: TextAlign.center,
                                                 ),
                                                 Text(
                                                   cubit.allbooksModel!.data!
                                                       .products![i].category!,
                                                   style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 15,
-                                                      color: Colors.grey,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15,
+                                                    color: Colors.grey,
                                                   ),
                                                   textAlign: TextAlign.center,
                                                 ),
@@ -129,12 +132,13 @@ class BooksScreen extends StatelessWidget {
                                                   cubit.allbooksModel!.data!
                                                       .products![i].price!,
                                                   maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: TextStyle(
-                                                    decoration: TextDecoration.lineThrough,
-                                                    color: Colors.blueGrey,
-                                                      fontSize: 20
-                                                  ),
+                                                      decoration: TextDecoration
+                                                          .lineThrough,
+                                                      color: Colors.blueGrey,
+                                                      fontSize: 20),
                                                   textAlign: TextAlign.center,
                                                 ),
                                                 Text(
@@ -145,49 +149,90 @@ class BooksScreen extends StatelessWidget {
                                                       .priceAfterDiscount!
                                                       .toString(),
                                                   maxLines: 2,
-                                                  overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                   style: TextStyle(
                                                       color: mainColor,
-                                                      fontWeight: FontWeight.bold,
-                                                      fontSize: 20
-                                                  ),
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20),
                                                   textAlign: TextAlign.center,
                                                 )
                                               ],
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                             ),
                                           ),
-                                          SizedBox(width: 30,),
+                                          SizedBox(
+                                            width: 30,
+                                          ),
                                           Expanded(
                                             child: Column(
-
                                               children: [
-                                                IconButton(
-                                                    onPressed: () {
-                                                          print(cubit.allbooksModel!.data!.products![i].id!);
-                                                    },
-                                                    icon: Icon(
-                                                        Icons.favorite_rounded,
-                                                      color: Colors.red,
-                                                      size: 30,
-                                                    )),
-                                                SizedBox(height: 40,),
-                                                IconButton(
-                                                    onPressed: () {},
-                                                    icon: Icon(
-                                                      FontAwesomeIcons.cartPlus,
-                                                      color: Colors.black,
-                                                      size: 25,
-                                                    )),
+                                                BlocConsumer<FavCubit,
+                                                    FavState>(
+                                                  listener: (context, state) {
+                                                    // TODO: implement listener
+                                                    if(state is AddFavSuccess)
+                                                      {
+                                                        FavCubit.get(context).GetAllFav();
+                                                        print ("fav item id just added ${FavCubit.get(context).showFav2Model!.data!.data![i].id}");
+                                                      }
+                                                  },
+                                                  builder: (context, state) {
+                                                    return IconButton(
+                                                        onPressed: () {
+                                                          FavCubit.get(context)
+                                                              .AddFav(cubit.allbooksModel!.data!.products![i].id!.toInt());
+                                                        },
+                                                        icon: Icon(
+                                                          Icons
+                                                              .favorite_rounded,
+                                                          color: Colors.black54,
+                                                          size: 30,
+                                                        ));
+                                                  },
+                                                ),
+                                                SizedBox(
+                                                  height: 40,
+                                                ),
+                                                Builder(builder: (contextt) {
+                                                  return IconButton(
+                                                      onPressed: () {
+                                                        CartCubit.get(contextt)
+                                                            .AddToCart(cubit
+                                                                .allbooksModel!
+                                                                .data!
+                                                                .products![i]
+                                                                .id!
+                                                                .toInt());
+                                                        CartCubit.get(contextt)
+                                                            .Showcart();
+                                                      },
+                                                      icon: Icon(
+                                                        FontAwesomeIcons
+                                                            .cartPlus,
+                                                        color: Colors.black,
+                                                        size: 25,
+                                                      ));
+                                                }),
                                               ],
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    onTap: (){
-                                      ShowBookCubit.get(context).GetBookDetails(cubit.allbooksModel!.data!.products![i].id!.toInt());
-                                      navto(context, BookDetailsScreen(id: cubit.allbooksModel!.data!.products![i].id!.toInt()));
+                                    onTap: () {
+                                      ShowBookCubit.get(context).GetBookDetails(
+                                          cubit.allbooksModel!.data!
+                                              .products![i].id!
+                                              .toInt());
+                                      navto(
+                                          context,
+                                          BookDetailsScreen(
+                                              id: cubit.allbooksModel!.data!
+                                                  .products![i].id!
+                                                  .toInt()));
                                       print("id : $i");
                                     },
                                   );
@@ -204,6 +249,7 @@ class BooksScreen extends StatelessWidget {
       },
     );
   }
+
   Widget CustomTextfield() {
     return TextField(
       keyboardType: TextInputType.text,

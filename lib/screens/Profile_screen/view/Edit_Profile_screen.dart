@@ -20,7 +20,6 @@ class EditProfileScreen extends StatelessWidget {
     return BlocConsumer<EditProfileCubit, EditProfileState>(
       listener: (context, EditProfileState state) {
         // TODO: implement listener
-
         if(state is EditProfileSuccess){
           BlocProvider.of<ShowProfileCubit>(context).GetProfileData();
           navto(context, UserProfileScreen());

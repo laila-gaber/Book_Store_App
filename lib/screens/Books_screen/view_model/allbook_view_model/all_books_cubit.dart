@@ -14,6 +14,7 @@ class AllBooksCubit extends Cubit<AllBooksState> {
   AllBooksCubit() : super(AllBooksInitial());
   final Dio dio=Dio();
   AllbooksModel?allbooksModel;
+  Map<int,bool>favourites={};
   static AllBooksCubit get(context) => BlocProvider.of(context);
   GetAllBooks()
   {

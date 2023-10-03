@@ -5,6 +5,8 @@ import 'package:v_care_clinic/bottomnavbar.dart';
 import 'package:v_care_clinic/screens/Books_screen/view/Book_detais_screen.dart';
 import 'package:v_care_clinic/screens/Books_screen/view_model/allbook_view_model/all_books_cubit.dart';
 import 'package:v_care_clinic/screens/Books_screen/view_model/showbook_view_model/show_book_cubit.dart';
+import 'package:v_care_clinic/screens/Cart_screen/viewmodel/cart_cubit.dart';
+import 'package:v_care_clinic/screens/Fav_screen/viewmodel/fav_cubit.dart';
 import 'package:v_care_clinic/screens/Home_screen/view/home_screen.dart';
 import 'package:v_care_clinic/screens/Home_screen/view_model/BestSeller_view_model/best_seller_cubit.dart';
 import 'package:v_care_clinic/screens/Home_screen/view_model/Categories_view_model/categories_cubit.dart';
@@ -52,7 +54,10 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context)=>  AllBooksCubit()..GetAllBooks()),
             BlocProvider(create: (context)=>  ShowBookCubit()),
             BlocProvider(create: (context)=>  ShowProfileCubit()..GetProfileData()),
-            BlocProvider(create: (context)=>  EditProfileCubit())
+            BlocProvider(create: (context)=>  EditProfileCubit()),
+            BlocProvider(create: (context)=>  FavCubit()),
+           BlocProvider(create: (context)=>  CartCubit()..Showcart())
+
           ],
       child: ScreenUtilInit(
         child: MaterialApp(
