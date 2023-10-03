@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context)=>  ShowBookCubit()),
             BlocProvider(create: (context)=>  ShowProfileCubit()..GetProfileData()),
             BlocProvider(create: (context)=>  EditProfileCubit()),
-            BlocProvider(create: (context)=>  FavCubit()),
+            BlocProvider(create: (context)=>  FavCubit()..GetAllFav()),
            BlocProvider(create: (context)=>  CartCubit()..Showcart())
 
           ],

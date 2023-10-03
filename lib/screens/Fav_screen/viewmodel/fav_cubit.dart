@@ -118,4 +118,52 @@ class FavCubit extends Cubit<FavState> {
 
 
   }
+  RemoveFav(int product_id)
+  {
+    emit(RemoveFavLoading());
+    DioHelper.postData(
+      url: ApiConst.REMOVEFAV,
+      data:
+      {
+        'product_id': product_id,
+      },
+      token: CacheHelper.getData(key: "token"),
+    ).then((response){
+      print(response.data);
+      removefromfavmodel=Removefromfavmodel.fromJson(response.data);
+      print(Removefromfavmodel.fromJson(response.data));
+      print(response.data['message']);
+      Fluttertoast.showToast(
+        msg: "Removed from favourite",
+        backgroundColor: Colors.green,
+      );
+      emit(RemoveFavSuccess());
+    }).catchError((error)
+    {
+      print(" ${error.toString()}");
+      if (error is DioError) {
+        if (error.response != null) {
+          print(error.response!.data);
+          print(error.response!.statusCode);
+          print(error.response!.statusMessage);
+
+          Map<String, dynamic> data = error.response!.data;
+
+          Fluttertoast.showToast(
+            msg: error.response!.statusMessage!,
+            backgroundColor: Colors.red,
+          );
+          //  print(error.response!.headers);
+        } else {
+          print(error.requestOptions);
+          print(error.message);
+        }
+      } else {
+        print(error);
+      }
+      emit(RemoveFavFailure());
+    });
+
+
+  }
 }

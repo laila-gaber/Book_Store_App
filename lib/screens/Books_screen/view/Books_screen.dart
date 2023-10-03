@@ -169,21 +169,24 @@ class BooksScreen extends StatelessWidget {
                                           Expanded(
                                             child: Column(
                                               children: [
-                                                BlocConsumer<FavCubit,
-                                                    FavState>(
+                                                BlocConsumer<FavCubit, FavState>(
                                                   listener: (context, state) {
                                                     // TODO: implement listener
-                                                    if(state is AddFavSuccess)
-                                                      {
-                                                        FavCubit.get(context).GetAllFav();
-                                                        print ("fav item id just added ${FavCubit.get(context).showFav2Model!.data!.data![i].id}");
-                                                      }
+                                                    if (state is AddFavSuccess) {
+                                                      FavCubit.get(context).GetAllFav();
+
+                                                    }
                                                   },
                                                   builder: (context, state) {
                                                     return IconButton(
                                                         onPressed: () {
                                                           FavCubit.get(context)
-                                                              .AddFav(cubit.allbooksModel!.data!.products![i].id!.toInt());
+                                                              .AddFav(cubit
+                                                                  .allbooksModel!
+                                                                  .data!
+                                                                  .products![i]
+                                                                  .id!
+                                                                  .toInt());
                                                         },
                                                         icon: Icon(
                                                           Icons
@@ -197,24 +200,28 @@ class BooksScreen extends StatelessWidget {
                                                   height: 40,
                                                 ),
                                                 Builder(builder: (contextt) {
-                                                  return IconButton(
-                                                      onPressed: () {
-                                                        CartCubit.get(contextt)
-                                                            .AddToCart(cubit
-                                                                .allbooksModel!
-                                                                .data!
-                                                                .products![i]
-                                                                .id!
-                                                                .toInt());
-                                                        CartCubit.get(contextt)
-                                                            .Showcart();
-                                                      },
-                                                      icon: Icon(
-                                                        FontAwesomeIcons
-                                                            .cartPlus,
-                                                        color: Colors.black,
-                                                        size: 25,
-                                                      ));
+                                                  return BlocConsumer<CartCubit,
+                                                      CartState>(
+                                                    listener: (context, state) {
+                                                      // TODO: implement listener
+                                                      if(state is AddCartSuccess)
+                                                        {
+                                                          CartCubit.get(context).Showcart();
+                                                        }
+                                                    },
+                                                    builder: (context, state) {
+                                                      return IconButton(
+                                                          onPressed: () {
+                                                            CartCubit.get(contextt).AddToCart(cubit.allbooksModel!.data!.products![i].id!.toInt());
+                                                            CartCubit.get(contextt).Showcart();
+                                                          },
+                                                          icon: Icon(
+                                                            FontAwesomeIcons.cartPlus,
+                                                            color: Colors.black,
+                                                            size: 25,
+                                                          ));
+                                                    },
+                                                  );
                                                 }),
                                               ],
                                             ),

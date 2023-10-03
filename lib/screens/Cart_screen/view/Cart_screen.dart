@@ -114,7 +114,6 @@ class CartScreen extends StatelessWidget {
                                   IconButton(
                                       onPressed: () {
                                         CartCubit.get(context).RemoveCart(cubit.showCartModel!.data!.cartItems![i].itemId!.toInt());
-                                        print("the item is removed");
                                         CartCubit.get(context).Showcart();
                                       },
                                       icon: Icon(
@@ -203,7 +202,7 @@ class CartScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      cubit.showCartModel!.data!.total!.toString(),
+                      "Total: ${cubit.showCartModel!.data!.total!.toString()}",
                       textAlign: TextAlign.left,
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     ),

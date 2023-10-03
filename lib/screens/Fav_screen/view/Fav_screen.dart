@@ -201,16 +201,20 @@ class FavScreen extends StatelessWidget {
   }
 }*/
 class FavScreen extends StatelessWidget {
-  FavScreen({Key? key}) : super(key: key);
+ // FavScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<FavCubit, FavState>(
       listener: (context, state) {
         // TODO: implement listener
+        if(state is RemoveFavSuccess)
+          {
+            FavCubit.get(context).GetAllFav();
+          }
       },
       builder: (context, state) {
         var cubit = FavCubit.get(context);
-        if (cubit.favouriteModel!.data != null && cubit.favouriteModel!.data!.product!.length!=0) {
+        if (cubit.showFav2Model!.data != null && cubit.showFav2Model!.data!.data!.length!=0) {
           return Scaffold(
             body: Container(
                 height: MediaQuery.of(context).size.height,
@@ -218,7 +222,7 @@ class FavScreen extends StatelessWidget {
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  itemCount: cubit.favouriteModel!.data!.product!.length,
+                  itemCount: cubit.showFav2Model!.data!.data!.length,
                   itemBuilder: (BuildContext context, int i) {
                     return InkWell(
                       child: Container(
@@ -240,8 +244,8 @@ class FavScreen extends StatelessWidget {
                                         horizontal: 10.0),
                                     child: Stack(children: [
                                       Image.network(
-                                        cubit.favouriteModel!.data!
-                                            .product![i].image!,
+                                        cubit.showFav2Model!.data!
+                                            .data![i].image!,
                                         fit: BoxFit.fill,
                                         height: 150,
                                         width: 200,
@@ -259,7 +263,7 @@ class FavScreen extends StatelessWidget {
                                               Radius.circular(3)),
                                         ),
                                         child: Text(
-                                          "${cubit.favouriteModel!.data!.product![i].discount.toString()}%",
+                                          "${cubit.showFav2Model!.data!.data![i].discount.toString()}%",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 15,
@@ -278,8 +282,8 @@ class FavScreen extends StatelessWidget {
                               child: Column(
                                 children: [
                                   Text(
-                                    cubit.favouriteModel!.data!
-                                        .product![i].name!,
+                                    cubit.showFav2Model!.data!
+                                        .data![i].name!,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black,
@@ -287,8 +291,8 @@ class FavScreen extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                   ),
                                   Text(
-                                    cubit.favouriteModel!.data!
-                                        .product![i].category!,
+                                    cubit.showFav2Model!.data!
+                                        .data![i].category!,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 15,
@@ -297,8 +301,8 @@ class FavScreen extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                   ),
                                   Text(
-                                    cubit.favouriteModel!.data!
-                                        .product![i].price!,
+                                    cubit.showFav2Model!.data!
+                                        .data![i].price!,
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -309,8 +313,8 @@ class FavScreen extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                   ),
                                   Text(
-                                    cubit.favouriteModel!.data!
-                                        .product![i].priceAfterDiscount!
+                                    cubit.showFav2Model!.data!
+                                        .data![i].discount!
                                         .toString(),
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
@@ -332,8 +336,10 @@ class FavScreen extends StatelessWidget {
                               child: Column(
                                 children: [
                                   IconButton(
-                                          onPressed: () {
-
+                                          onPressed: ()
+                                          {
+                                            FavCubit.get(context).RemoveFav( cubit.showFav2Model!.data!.data![i].id.toInt());
+                                            FavCubit.get(context).GetAllFav();
                                           },
                                           icon: Icon(
                                             Icons.favorite_rounded,
@@ -362,13 +368,13 @@ class FavScreen extends StatelessWidget {
                       ),
                       onTap: () {
                         ShowBookCubit.get(context).GetBookDetails(cubit
-                            .allbooksModel!.data!.products![i].id!
+                            .showFav2Model!.data!.data![i].id!
                             .toInt());
                         navto(
                             context,
                             BookDetailsScreen(
                                 id: cubit
-                                    .allbooksModel!.data!.products![i].id!
+                                    .showFav2Model!.data!.data![i].id!
                                     .toInt()));
                         print("id : $i");
                       },
