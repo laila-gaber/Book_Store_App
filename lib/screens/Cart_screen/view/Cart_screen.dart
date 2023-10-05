@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:v_care_clinic/screens/Cart_screen/viewmodel/cart_cubit.dart';
+import 'package:v_care_clinic/screens/Check_out_screen/view/check_out_screen.dart';
 
 import '../../../core/Colors.dart';
 import '../../../core/SharedFunctions.dart';
@@ -129,7 +130,7 @@ class CartScreen extends StatelessWidget {
                               ),
                               Row(
                                 children: [
-                                  Update_cart_quantity(
+                                  /*Update_cart_quantity(
                                     context,
                                     cubit.showCartModel!.data!.cartItems![i]
                                         .itemId!
@@ -137,7 +138,11 @@ class CartScreen extends StatelessWidget {
                                     cubit.showCartModel!.data!.cartItems![i]
                                         .itemQuantity!
                                         .toInt(),
-                                  ),
+                                  ),*/
+                                  PlusMinusContainer(context,cubit.showCartModel!.data!.cartItems![i]
+                                      .itemId!.toInt(),cubit.showCartModel!.data!.cartItems![i]
+                                      .itemQuantity!.toInt()),
+                                 // CartCubit.get(context).Showcart(),
                                   SizedBox(
                                     width: 60,
                                   ),
@@ -210,7 +215,9 @@ class CartScreen extends StatelessWidget {
                       flex: 1,
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        navto(context, CheckOutScreen());
+                      },
                       child: Text(
                         "Check Out",
                         textAlign: TextAlign.center,
@@ -265,7 +272,9 @@ class _PlusMinusContainerState extends State<PlusMinusContainer> {
   }
 
   @override
+
 }*/
+/*
 Widget Update_cart_quantity(
     BuildContext context, int item_id, int initquantity) {
   var cubit = CartCubit.get(context);
@@ -364,3 +373,80 @@ Widget Update_cart_quantity(
     ),
   );
 }
+*/
+
+Widget PlusMinusContainer(BuildContext context , int item , int initquantity) {
+  int count= initquantity;
+    return Container(
+      width: 120,
+      height: 50,
+      padding: EdgeInsets.symmetric(horizontal: 5),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8.0),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      //padding: EdgeInsets.all(16.0),
+      child: Row(
+        children: [
+          InkWell(
+            child: CircleAvatar(
+              radius: 15,
+              backgroundColor: mainColor,
+                child: Icon(
+                    Icons.arrow_circle_down_rounded,
+                color: Colors.white,
+                  size: 30,
+                )
+            ),
+            onTap: ()
+            {
+              print("count$count");
+              count!=0?count--:count;
+              print("count after func$count");
+              CartCubit.get(context).UpdateCart(Cart_item_id:item.toString(), quantity:count.toString());
+              print("count after calling cubit$count");
+              print("item after$item");
+            },
+          ),
+
+          SizedBox(width: 16.0),
+          Text(
+            '$count',
+            style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(width: 16.0),
+          InkWell(
+            child: CircleAvatar(
+                radius: 15,
+                backgroundColor: mainColor,
+                child: Icon(
+                  Icons.arrow_circle_up_outlined,
+                  color: Colors.white,
+                  size: 30,
+                )
+            ),
+            onTap: ()
+            {
+              print("count$count");
+              count++;
+              print("count after func$count");
+              CartCubit.get(context).UpdateCart(Cart_item_id:item.toString(), quantity: count.toString());
+              print("count after calling cubit$count");
+              print("item after$item");
+            },
+          ),
+        ],
+      ),
+    );
+  }

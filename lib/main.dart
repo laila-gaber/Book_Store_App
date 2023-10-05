@@ -6,6 +6,7 @@ import 'package:v_care_clinic/screens/Books_screen/view/Book_detais_screen.dart'
 import 'package:v_care_clinic/screens/Books_screen/view_model/allbook_view_model/all_books_cubit.dart';
 import 'package:v_care_clinic/screens/Books_screen/view_model/showbook_view_model/show_book_cubit.dart';
 import 'package:v_care_clinic/screens/Cart_screen/viewmodel/cart_cubit.dart';
+import 'package:v_care_clinic/screens/Check_out_screen/view_model/check_out_cubit.dart';
 import 'package:v_care_clinic/screens/Fav_screen/viewmodel/fav_cubit.dart';
 import 'package:v_care_clinic/screens/Home_screen/view/home_screen.dart';
 import 'package:v_care_clinic/screens/Home_screen/view_model/BestSeller_view_model/best_seller_cubit.dart';
@@ -16,6 +17,7 @@ import 'package:v_care_clinic/screens/LoginScreen/viewmodel/SignIncubit/SigninCu
 import 'package:v_care_clinic/screens/Profile_screen/view/User_Profile_Screen.dart';
 import 'package:v_care_clinic/screens/Profile_screen/viewmodel/edit_profile/edit_profile_cubit.dart';
 import 'package:v_care_clinic/screens/Profile_screen/viewmodel/show_profile/show_profile_cubit.dart';
+import 'package:v_care_clinic/screens/Search_screen/view_model/search_pproducts/search_cubit.dart';
 import 'package:v_care_clinic/screens/home_screen/view/widget/home_screen_body.dart';
 import 'package:v_care_clinic/screens/nav/navbar.dart';
 
@@ -56,14 +58,17 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context)=>  ShowProfileCubit()..GetProfileData()),
             BlocProvider(create: (context)=>  EditProfileCubit()),
             BlocProvider(create: (context)=>  FavCubit()..GetAllFav()),
-           BlocProvider(create: (context)=>  CartCubit()..Showcart())
+            BlocProvider(create: (context)=>  CartCubit()..Showcart()),
+            BlocProvider(create: (context)=>  SearchCubit()),
+            BlocProvider(create: (context)=>  CheckOutCubit()..Showorder())
+
 
           ],
       child: ScreenUtilInit(
         child: MaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
-          home:SplashScreen(),
+          home:Nav(),
         ),
       ),
     );

@@ -109,7 +109,7 @@ class CartCubit extends Cubit<CartState> {
 
   }
 
-  UpdateCart({required int Cart_item_id,required int quantity})
+  UpdateCart({required String Cart_item_id,required String quantity})
   {
     emit(UpdateCartLoading());
     DioHelper.postData(
