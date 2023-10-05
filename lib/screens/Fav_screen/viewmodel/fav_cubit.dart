@@ -20,13 +20,12 @@ part 'fav_state.dart';
 class FavCubit extends Cubit<FavState> {
   FavCubit() : super(FavInitial());
   final Dio dio=Dio();
-  //ShowFavModel?showFavModel;
   ShowFav2Model?showFav2Model;
-  FavouriteModel?favouriteModel;
   Addtofavmodel?addtofav;
   Removefromfavmodel?removefromfavmodel;
   AllbooksModel?allbooksModel;
-  Map<int,bool>favourites={};
+  List<int>favourites=[];
+  var mysetfav=<int>{};
   static FavCubit get(context) => BlocProvider.of(context);
   GetAllFav()
   {
@@ -35,10 +34,14 @@ class FavCubit extends Cubit<FavState> {
       url: ApiConst.SHOWFAV,
       token: CacheHelper.getData(key: "token"),
     ).then((response){
-      print(response.data);
+      //print(response.data);
       showFav2Model=ShowFav2Model.fromJson(response.data);
-      print(ShowFav2Model.fromJson(response.data));
-      print(response.data['message']);
+      showFav2Model!.data!.data.forEach((element) {
+        mysetfav.add(element.id);
+      });
+      print("list of favshow added $mysetfav");
+      //print(ShowFav2Model.fromJson(response.data));
+      //print(response.data['message']);
       emit(ShowFavSuccess());
     }).catchError((error)
     {
@@ -82,6 +85,10 @@ class FavCubit extends Cubit<FavState> {
     ).then((response){
       print(response.data);
       addtofav=Addtofavmodel.fromJson(response.data);
+      showFav2Model!.data!.data.forEach((element) {
+        mysetfav.add(element.id);
+      });
+      print("list of favvvv added $mysetfav");
       print(Addtofavmodel.fromJson(response.data));
       print(response.data['message']);
       Fluttertoast.showToast(
@@ -91,7 +98,6 @@ class FavCubit extends Cubit<FavState> {
       emit(AddFavSuccess());
     }).catchError((error)
     {
-      print("Error in Slider");
       print(" ${error.toString()}");
       if (error is DioError) {
         if (error.response != null) {
@@ -131,6 +137,15 @@ class FavCubit extends Cubit<FavState> {
     ).then((response){
       print(response.data);
       removefromfavmodel=Removefromfavmodel.fromJson(response.data);
+      showFav2Model!.data!.data.forEach((element) {
+        /*if(!favourites.contains(element))
+          {
+            favourites.add(element.id);
+            print("dakhalt");
+          }*/
+        mysetfav.remove(element.id);
+      });
+      print("list of favvvv remove $mysetfav");
       print(Removefromfavmodel.fromJson(response.data));
       print(response.data['message']);
       Fluttertoast.showToast(

@@ -109,14 +109,14 @@ class CartCubit extends Cubit<CartState> {
 
   }
 
-  UpdateCart({required String Cart_item_id,required String quantity})
+  void UpdateCart({required String Cart_item_id,required String quantity})
   {
     emit(UpdateCartLoading());
     DioHelper.postData(
       url: ApiConst.UPDATECART,
       data:
       {
-        'item_id': Cart_item_id,
+        'cart_item_id': Cart_item_id,
         'quantity':quantity,
       },
       token: CacheHelper.getData(key: "token"),

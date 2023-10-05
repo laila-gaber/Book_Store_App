@@ -20,8 +20,14 @@ class BooksScreen extends StatelessWidget {
     return BlocConsumer<AllBooksCubit, AllBooksState>(
       listener: (context, state) {
         // TODO: implement listener
+        if (state is AllBooksSucces) {
+          FavCubit.get(context).GetAllFav();
+        }
       },
       builder: (context, state) {
+        // FavCubit.get(context).mysetfav={};
+        // int favitem;
+        //bool isfavitem;
         var cubit = AllBooksCubit.get(context);
         return cubit.allbooksModel != null
             ? cubit.allbooksModel!.data!.products!.isNotEmpty
@@ -30,15 +36,14 @@ class BooksScreen extends StatelessWidget {
                       actions: [
                         InkWell(
                           child: Icon(Icons.search),
-                          onTap: ()
-                          {
+                          onTap: () {
                             navto(context, SearchScreen());
                           },
                         )
                       ],
                     ),
                     body: SingleChildScrollView(
-                      physics:ScrollPhysics(),
+                      physics: ScrollPhysics(),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -70,9 +75,9 @@ class BooksScreen extends StatelessWidget {
                                           child: Column(
                                             children: [
                                               Padding(
-                                                padding: const EdgeInsets
-                                                        .symmetric(
-                                                    horizontal: 10.0),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10.0),
                                                 child: Stack(children: [
                                                   Image.network(
                                                     cubit.allbooksModel!.data!
@@ -105,8 +110,7 @@ class BooksScreen extends StatelessWidget {
                                                           fontSize: 15,
                                                           fontWeight:
                                                               FontWeight.bold,
-                                                          color:
-                                                              Colors.white),
+                                                          color: Colors.white),
                                                     ),
                                                   ),
                                                 ]),
@@ -123,8 +127,7 @@ class BooksScreen extends StatelessWidget {
                                                 cubit.allbooksModel!.data!
                                                     .products![i].name!,
                                                 style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold,
+                                                    fontWeight: FontWeight.bold,
                                                     color: Colors.black,
                                                     fontSize: 20),
                                                 textAlign: TextAlign.center,
@@ -143,8 +146,7 @@ class BooksScreen extends StatelessWidget {
                                                 cubit.allbooksModel!.data!
                                                     .products![i].price!,
                                                 maxLines: 2,
-                                                overflow:
-                                                    TextOverflow.ellipsis,
+                                                overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
                                                     decoration: TextDecoration
                                                         .lineThrough,
@@ -160,12 +162,10 @@ class BooksScreen extends StatelessWidget {
                                                     .priceAfterDiscount!
                                                     .toString(),
                                                 maxLines: 2,
-                                                overflow:
-                                                    TextOverflow.ellipsis,
+                                                overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
                                                     color: mainColor,
-                                                    fontWeight:
-                                                        FontWeight.bold,
+                                                    fontWeight: FontWeight.bold,
                                                     fontSize: 20),
                                                 textAlign: TextAlign.center,
                                               )
@@ -180,15 +180,13 @@ class BooksScreen extends StatelessWidget {
                                         Expanded(
                                           child: Column(
                                             children: [
-                                              BlocConsumer<FavCubit,
-                                                  FavState>(
+                                              BlocConsumer<FavCubit, FavState>(
                                                 listener: (context, state) {
                                                   // TODO: implement listener
-                                                  if (state
-                                                      is AddFavSuccess) {
-                                                    FavCubit.get(context)
-                                                        .GetAllFav();
-                                                  }
+                                                  if(state is AddFavSuccess)
+                                                    {
+                                                      FavCubit.get(context).GetAllFav();
+                                                    }
                                                 },
                                                 builder: (context, state) {
                                                   return IconButton(
@@ -200,11 +198,12 @@ class BooksScreen extends StatelessWidget {
                                                                 .products![i]
                                                                 .id!
                                                                 .toInt());
+                                                        //isfavitem=FavCubit.get(context).mysetfav.contains(FavCubit.get(context).showFav2Model!.data!.data[i].id.toInt());
+                                                        //isfavitem? favitem=1:favitem=0;
                                                       },
                                                       icon: Icon(
-                                                        Icons
-                                                            .favorite_rounded,
-                                                        color: Colors.black54,
+                                                        Icons.favorite_rounded,
+                                                         color: (FavCubit.get(context).mysetfav.contains(cubit.allbooksModel!.data!.products![i].id!.toInt()))?Colors.red:Colors.black45,
                                                         size: 30,
                                                       ));
                                                 },
@@ -231,8 +230,7 @@ class BooksScreen extends StatelessWidget {
                                                               .AddToCart(cubit
                                                                   .allbooksModel!
                                                                   .data!
-                                                                  .products![
-                                                                      i]
+                                                                  .products![i]
                                                                   .id!
                                                                   .toInt());
                                                           CartCubit.get(
@@ -256,8 +254,8 @@ class BooksScreen extends StatelessWidget {
                                   ),
                                   onTap: () {
                                     ShowBookCubit.get(context).GetBookDetails(
-                                        cubit.allbooksModel!.data!
-                                            .products![i].id!
+                                        cubit.allbooksModel!.data!.products![i]
+                                            .id!
                                             .toInt());
                                     navto(
                                         context,
@@ -301,4 +299,3 @@ class BooksScreen extends StatelessWidget {
   }
    */
 }
-

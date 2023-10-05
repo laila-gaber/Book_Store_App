@@ -18,6 +18,9 @@ class ApiConst{
   static const  String  ADDTOCART = '/add-to-cart';
   static const  String  UPDATECART = '/update-cart';
   static const  String  REMOVECART = '/remove-from-cart';
+  static const  String  SEARCH = '/products-search';
+  static const  String  SHOWCHECKOUT = '/checkout';
+  static const  String  ORDER = '/place-order';
 
 
 

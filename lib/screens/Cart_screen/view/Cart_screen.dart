@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:v_care_clinic/screens/Cart_screen/viewmodel/cart_cubit.dart';
 import 'package:v_care_clinic/screens/Check_out_screen/view/check_out_screen.dart';
@@ -18,13 +19,14 @@ class CartScreen extends StatelessWidget {
     return BlocConsumer<CartCubit, CartState>(
       listener: (context, state) {
         // TODO: implement listener
-        if(state is RemoveCartSuccess)
+        if(state is RemoveCartSuccess || state is UpdateCartSuccess )
           {
             CartCubit.get(context).Showcart();
           }
       },
       builder: (context, state) {
         var cubit = CartCubit.get(context);
+        if(cubit.showCartModel!.data!.cartItems!.isNotEmpty)
         return Scaffold(
           body: Column(
             mainAxisSize: MainAxisSize.max,
@@ -37,149 +39,146 @@ class CartScreen extends StatelessWidget {
                   shrinkWrap: true,
                   itemCount: cubit.showCartModel!.data!.cartItems!.length,
                   itemBuilder: (BuildContext context, int i) {
-                    return InkWell(
-                      child: Container(
-                        margin: EdgeInsets.all(7),
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.purple.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 2,
-                                offset: Offset(0, 3),
-                                blurStyle: BlurStyle.normal),
-                          ],
+                    return Container(
+                      margin: EdgeInsets.all(7),
+                      padding: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.purple.withOpacity(0.5),
+                              spreadRadius: 2,
+                              blurRadius: 2,
+                              offset: Offset(0, 3),
+                              blurStyle: BlurStyle.normal),
+                        ],
+                      ),
+                      width: 150,
+                      child: Row(children: [
+                        Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Stack(children: [
+                            SizedBox(
+                              child: Image.network(
+                                cubit.showCartModel!.data!.cartItems![i]
+                                    .itemProductImage!,
+                                fit: BoxFit.fill,
+                              ),
+                              width: 100,
+                              height: 130,
+                            ),
+                            Container(
+                              height: 25,
+                              width: 50,
+                              padding: EdgeInsets.symmetric(vertical: 3),
+                              margin: EdgeInsets.symmetric(horizontal: 10),
+                              decoration: BoxDecoration(
+                                color: mainColor,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(3)),
+                              ),
+                              child: Text(
+                                "${cubit.showCartModel!.data!.cartItems![i].itemProductDiscount!.toString()}%",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ]),
                         ),
-                        width: 150,
-                        child: Row(children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Stack(children: [
-                              SizedBox(
-                                child: Image.network(
+                        Spacer(
+                          flex: 1,
+                        ),
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                SizedBox(
+                                  child: Text(
+                                    cubit.showCartModel!.data!.cartItems![i]
+                                        .itemProductName!,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                        fontSize: 20),
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                  ),
+                                  width: 100,
+                                ),
+                                SizedBox(
+                                  width: 80,
+                                ),
+                                IconButton(
+                                    onPressed: () {
+                                      CartCubit.get(context).RemoveCart(cubit.showCartModel!.data!.cartItems![i].itemId!.toInt());
+                                      CartCubit.get(context).Showcart();
+                                    },
+                                    icon: Icon(
+                                      Icons.delete,
+                                      color: Colors.red,
+                                      size: 40,
+                                    )),
+                              ],
+                              mainAxisAlignment: MainAxisAlignment.start,
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
+                            Row(
+                              children: [
+                                /*Update_cart_quantity(
+                                  context,
                                   cubit.showCartModel!.data!.cartItems![i]
-                                      .itemProductImage!,
-                                  fit: BoxFit.fill,
+                                      .itemId!
+                                      .toInt(),
+                                  cubit.showCartModel!.data!.cartItems![i]
+                                      .itemQuantity!
+                                      .toInt(),
+                                ),*/
+                                PlusMinusContainer(context,cubit.showCartModel!.data!.cartItems![i]
+                                    .itemId!.toString(),cubit.showCartModel!.data!.cartItems![i]
+                                    .itemQuantity!.toInt(),
+                                  cubit.showCartModel!.data!.cartItems![i].itemProductStock!.toInt(),
                                 ),
-                                width: 100,
-                                height: 130,
-                              ),
-                              Container(
-                                height: 25,
-                                width: 50,
-                                padding: EdgeInsets.symmetric(vertical: 3),
-                                margin: EdgeInsets.symmetric(horizontal: 10),
-                                decoration: BoxDecoration(
-                                  color: mainColor,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(3)),
+                               // CartCubit.get(context).Showcart(),
+                                SizedBox(
+                                  width: 50,
                                 ),
-                                child: Text(
-                                  "${cubit.showCartModel!.data!.cartItems![i].itemProductDiscount!.toString()}%",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                              ),
-                            ]),
-                          ),
-                          Spacer(
-                            flex: 1,
-                          ),
-                          Column(
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    child: Text(
-                                      cubit.showCartModel!.data!.cartItems![i]
-                                          .itemProductName!,
+                                Column(
+                                  children: [
+                                    Text(
+                                      "total:",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
+                                          color: Colors.blueGrey,
                                           fontSize: 20),
                                       textAlign: TextAlign.center,
-                                      maxLines: 2,
                                     ),
-                                    width: 100,
-                                  ),
-                                  SizedBox(
-                                    width: 80,
-                                  ),
-                                  IconButton(
-                                      onPressed: () {
-                                        CartCubit.get(context).RemoveCart(cubit.showCartModel!.data!.cartItems![i].itemId!.toInt());
-                                        CartCubit.get(context).Showcart();
-                                      },
-                                      icon: Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                        size: 40,
-                                      )),
-                                ],
-                                mainAxisAlignment: MainAxisAlignment.start,
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              Row(
-                                children: [
-                                  /*Update_cart_quantity(
-                                    context,
-                                    cubit.showCartModel!.data!.cartItems![i]
-                                        .itemId!
-                                        .toInt(),
-                                    cubit.showCartModel!.data!.cartItems![i]
-                                        .itemQuantity!
-                                        .toInt(),
-                                  ),*/
-                                  PlusMinusContainer(context,cubit.showCartModel!.data!.cartItems![i]
-                                      .itemId!.toInt(),cubit.showCartModel!.data!.cartItems![i]
-                                      .itemQuantity!.toInt()),
-                                 // CartCubit.get(context).Showcart(),
-                                  SizedBox(
-                                    width: 60,
-                                  ),
-                                  Column(
-                                    children: [
-                                      Text(
-                                        cubit.showCartModel!.data!.cartItems![i]
-                                            .itemProductPrice!,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            decoration:
-                                                TextDecoration.lineThrough,
-                                            color: Colors.blueGrey,
-                                            fontSize: 20),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                      Text(
-                                        cubit.showCartModel!.data!.cartItems![i]
-                                            .itemProductPriceAfterDiscount!
-                                            .toString(),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            color: mainColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20),
-                                        textAlign: TextAlign.center,
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ]),
-                      ),
+                                    Text(
+                                      cubit.showCartModel!.data!.cartItems![i]
+                                          .itemTotal!
+                                          .toStringAsFixed(2),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          color: mainColor,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                      textAlign: TextAlign.center,
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ]),
                     );
                   },
                 ),
@@ -240,6 +239,18 @@ class CartScreen extends StatelessWidget {
             ],
           ),
         );
+        else
+        {
+          return Center(
+              child: Text(
+                  "There are no items in the cart yet",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 30,
+                  color: Colors.deepPurple
+                ),
+              ));
+        }
         /*
         Text("Empty"):
         CircularProgressIndicator();*/
@@ -375,8 +386,9 @@ Widget Update_cart_quantity(
 }
 */
 
-Widget PlusMinusContainer(BuildContext context , int item , int initquantity) {
+Widget PlusMinusContainer(BuildContext context , String item , int initquantity, int stock) {
   int count= initquantity;
+  String quantity_count= initquantity.toString();
     return Container(
       width: 120,
       height: 50,
@@ -411,15 +423,26 @@ Widget PlusMinusContainer(BuildContext context , int item , int initquantity) {
               print("count$count");
               count!=0?count--:count;
               print("count after func$count");
-              CartCubit.get(context).UpdateCart(Cart_item_id:item.toString(), quantity:count.toString());
-              print("count after calling cubit$count");
-              print("item after$item");
+              if(count<=stock) {
+                CartCubit.get(context).UpdateCart(
+                    Cart_item_id: item, quantity: count.toString());
+                print("count after calling cubit$count");
+                print("item after$item");
+                quantity_count = count.toString();
+              }
+              else if(count>stock)
+                {
+                  Fluttertoast.showToast(
+                      msg:"Not Enough Stock",
+                    backgroundColor: Colors.amber
+                  );
+                }
             },
           ),
 
           SizedBox(width: 16.0),
           Text(
-            '$count',
+            '$quantity_count',
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.bold,
@@ -441,9 +464,20 @@ Widget PlusMinusContainer(BuildContext context , int item , int initquantity) {
               print("count$count");
               count++;
               print("count after func$count");
-              CartCubit.get(context).UpdateCart(Cart_item_id:item.toString(), quantity: count.toString());
+            if(count<=stock) {
+              CartCubit.get(context).UpdateCart(
+                  Cart_item_id: item, quantity: count.toString());
               print("count after calling cubit$count");
               print("item after$item");
+              quantity_count = count.toString();
+            }
+            else if(count>stock)
+            {
+              Fluttertoast.showToast(
+                  msg:"Not Enough Stock",
+                  backgroundColor: Colors.amber
+              );
+            }
             },
           ),
         ],
