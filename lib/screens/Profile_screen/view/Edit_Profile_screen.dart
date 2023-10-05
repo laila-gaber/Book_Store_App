@@ -8,6 +8,7 @@ import 'package:v_care_clinic/screens/Profile_screen/viewmodel/show_profile/show
 
 class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({super.key});
+
   bool isvisible = false;
   var emailController = TextEditingController();
   var nameController = TextEditingController();
@@ -15,20 +16,20 @@ class EditProfileScreen extends StatelessWidget {
   var CityController = TextEditingController();
   var AdressController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<EditProfileCubit, EditProfileState>(
-      listener: (context, EditProfileState state) {
+      listener: (context, state) {
         // TODO: implement listener
-        if(state is EditProfileSuccess){
-          BlocProvider.of<ShowProfileCubit>(context).GetProfileData();
-          navto(context, UserProfileScreen());
-        }
+        if(state is EditProfileSuccess)
+          {
+            ShowProfileCubit.get(context).GetProfileData();
+            navto(context, UserProfileScreen());
+          }
       },
       builder: (context, state) {
-        var cubit = EditProfileCubit.get(context);
-        return cubit.editmodel != null?
-         Scaffold(
+        return Scaffold(
           appBar: AppBar(
             backgroundColor: mainColor,
           ),
@@ -177,10 +178,9 @@ class EditProfileScreen extends StatelessWidget {
                             name: nameController.text,
                             email: emailController.text,
                             phone: phoneController.text,
-                            city:CityController.text,
+                            city: CityController.text,
                             address: AdressController.text,
                           );
-
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -200,8 +200,9 @@ class EditProfileScreen extends StatelessWidget {
               ),
             ),
           ),
-        ): CircularProgressIndicator();
+        );
       },
-    );
+    ); //: CircularProgressIndicator();
+
   }
 }
