@@ -30,64 +30,124 @@ class SearchScreen extends StatelessWidget {
       builder: (context, state) {
         var searchcubit = SearchCubit.get(context);
         return Scaffold(
-          
+          backgroundColor: mainColor,
+          appBar: AppBar(
+            title: Center(child: Text(
+                "Start Search For Books",
+              style: TextStyle(
+                fontSize: 25
+              ),
+            )),
+            backgroundColor: mainColor,
+            elevation:0 ,
+            automaticallyImplyLeading: false,
+          ),
           body: SafeArea(
             child: Column(
               children: [
-                Material(
-                  elevation: 10,
-                  child: CustomTextFormField(
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter your book';
-                      }
-                      return null;
-                    },
-                    onFieldSubmitted: (value) {
-                      SearchCubit.get(context).SearchProduct(searchController.text);
-                       print(value);
-                      },
-                    hintText: "search for a book",
-                    inputType: TextInputType.text,
-                    icon: Icon(Icons.search),
-                    controller: searchController,
-                  ),
-                ),
-                SizedBox(height: 20,),
-               // searchcubit.searchProductModel!.data!.products!.isEmpty ?Container(color:Colors.amberAccent,child: CircularProgressIndicator(),) :
-                if( state is SearchSuccess && SearchCubit.get(context).searchProductModel!.data!.products!.isEmpty== false)
-                    Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: ListView.builder(
-                            physics: ScrollPhysics(),
-                            itemCount: searchcubit.searchProductModel!.data!.products!.length,
-                            itemBuilder: (context, i) {
-                              return Padding(
-                                  padding: EdgeInsets.only(bottom: 10),
-                                  child: ListTile(tileColor: Colors.grey[200],
-                                    leading: Image.network(searchcubit.searchProductModel!.data!.products![i].image,fit: BoxFit.fill),
-                                    title: Text(searchcubit.searchProductModel!.data!.products![i].name),
-                                    subtitle: Text(searchcubit.searchProductModel!.data!.products![i].priceAfterDiscount.toString(),style: Styles.textStyle20), //Text(searchcubit.searchProductModel!.data!.products![i].priceAfterDiscount.toString(),style: Styles.textStyle20),),
-                                  )
-                              );
-                            },
-                            scrollDirection: Axis.vertical,
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: CircleAvatar(
+                        radius: 25,
+                        child: Icon(
+                          Icons.search,
+                          color: mainColor,
+                          size: 30,
+                        ),
+                        backgroundColor: Colors.white,
 
+                      ),
+                    ) ,
+                    Expanded(
+                      child: AnimatedContainer(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          color: Colors.grey[200],
+                        ),
+                        height: 50,
+                        margin: EdgeInsets.symmetric(horizontal: 10,vertical: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: TextFormField(
+                          cursorColor: mainColor,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your book';
+                            }
+                            return null;
+                          },
+                          onFieldSubmitted: (value) {
+                            SearchCubit.get(context).SearchProduct(searchController.text);
+                            print(value);
+                          },
+                          keyboardType: TextInputType.text,
+                          controller: searchController,
+                          decoration: InputDecoration(
+                            //isCollapsed: true,
+                            hintText: "Search for a book",
+                            hintStyle: TextStyle(
+                              fontSize: 20
+                            ),
+                            border: InputBorder.none,
                           ),
-                        )
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                if (state is SearchSuccess &&
+                    SearchCubit.get(context).searchProductModel!.data!.products!.isEmpty == false)
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child: ListView.builder(
+                        physics: ScrollPhysics(),
+                        itemCount: searchcubit.searchProductModel!.data!.products!.length,
+                        itemBuilder: (context, i) {
+                          return Container(
+                            height: 80,
+                            margin: EdgeInsets.only(bottom: 20,right: 5,left: 5),
+                            child: ListTile(
+                              tileColor: Colors.grey[200],
+                              leading: Image.network(
+                                searchcubit.searchProductModel!.data!.products![i].image,
+                                fit: BoxFit.fill,
+                                height: 80,
+                              ),
+                              title: Text(
+                                  searchcubit.searchProductModel!.data!.products![i].name,
+                                style: Styles.textStyle20,
+
+                              ),
+                              subtitle: Text(
+                                searchcubit.searchProductModel!.data!.products![i].priceAfterDiscount.toString(),
+                                style: Styles.textStyle20,
+                              ),
+                            ),
+                          );
+                        },
+                        scrollDirection: Axis.vertical,
+                      ),
+                    ),
+                  )
+                else if (state is SearchLoading)
+                  CustomLoadingIndicator()
+                else if (state is SearchFailure)
+                    CustomErrorWidget(
+                      errorMessage: state.errormsg,
                     )
-                else if(state is SearchLoading)
-                CustomLoadingIndicator()
-                else if(state is SearchFailure)
-                CustomErrorWidget(errorMessage: state.errormsg,)
-                else if( state is SearchSuccess &&SearchCubit.get(context).searchProductModel!.data!.products!.isEmpty== true)
-                Center(
-                child:Text("There is No Items ")
-                )
+                  else if (state is SearchSuccess && SearchCubit.get(context).searchProductModel!.data!.products!.isEmpty == true)
+                      Center(
+                        child: Text("There are no items"),
+                      ),
               ],
             ),
           ),
+
         );
       },
     );

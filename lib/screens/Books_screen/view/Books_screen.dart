@@ -33,14 +33,36 @@ class BooksScreen extends StatelessWidget {
             ? cubit.allbooksModel!.data!.products!.isNotEmpty
                 ? Scaffold(
                     appBar: AppBar(
-                      actions: [
-                        InkWell(
-                          child: Icon(Icons.search),
-                          onTap: () {
-                            navto(context, SearchScreen());
-                          },
-                        )
-                      ],
+                      title: Row(
+                        children: [
+                          InkWell(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: CircleAvatar(
+                                  radius: 20,
+                                  backgroundColor: Colors.white,
+                                  child: Icon(
+                                    Icons.search_rounded,
+                                    color: Colors.pink,
+                                    size: 25,
+                                  )
+                              ),
+                            ),
+                            onTap: () {
+                              navto(context, SearchScreen());
+                            },
+                          ),
+                          Center(child: Text(
+                            "Explore all Books!",
+                            style: TextStyle(
+                                fontSize: 25
+                            ),
+                          )),
+                        ],
+                      ),
+                      backgroundColor: mainColor,
+                      elevation:0 ,
+                      automaticallyImplyLeading: false,
                     ),
                     body: SingleChildScrollView(
                       physics: ScrollPhysics(),

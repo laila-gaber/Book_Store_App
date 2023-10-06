@@ -3,4 +3,4 @@
 
 import 'package:flutter/material.dart';
 
-const Color mainColor =  Colors.purple;
+const Color mainColor =  Colors.amber;

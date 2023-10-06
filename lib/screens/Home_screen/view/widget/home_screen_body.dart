@@ -58,29 +58,32 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                   scubit.slidermodel!.data!.sliders!.isNotEmpty?
                   Container(
                     height: 200,
-                    child: CarouselSlider(
+                    child:CarouselSlider(
                       carouselController: controller,
-                      items:scubit.slidermodel!.data!.sliders!?.map((imgurl) {
+                      items: scubit.slidermodel!.data!.sliders!.map((imgurl) {
                         return Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(20)),
-                            ),
-                            color: Colors.green,
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
                             child: Image.network(
                               imgurl.image!,
                               fit: BoxFit.fill,
-                            ));
+                            ),
+                          ),
+                        );
                       }).toList(),
                       options: CarouselOptions(
                         height: 300,
-                        /*onPageChanged: (val, _) {
-                        setState(() {
-                          print("new index $val");
-                          controller.jumpToPage(val);
-                        });
-                      }*/
+                        enableInfiniteScroll: true,
+                        autoPlay: true,
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enlargeCenterPage: true,
+                        viewportFraction: 0.8,
                       ),
-                    ),
+                    )
                   ):
                   Text(
                     "data is null",
@@ -206,50 +209,35 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                       ),
                       SizedBox(height: 10,),
                       Container(
-                        height: 200,
+                        height: 50,
                         width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.only(bottom: 10),
                         // color: Colors.red,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
                           itemCount: categorycubit.categoriesmodel!.data!.categories!.length,
                           itemBuilder: (BuildContext context, int i) {
-                            return SizedBox(
-                              width: 150,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                                    child: Stack(
-                                        children: [
-                                          Container(
-                                            height: 150,
-                                            width:250,
-                                            //padding: EdgeInsets.symmetric(vertical: 3),
-                                            //margin: EdgeInsets.symmetric(horizontal: 10),
-                                            decoration: BoxDecoration(
-                                              color: mainColor,
-                                              borderRadius: BorderRadius.all(Radius.circular(10)),
-                                            ),
-                                            child: Image.asset(
-                                                "assets/img/book7.jpg",fit: BoxFit.fill,),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
-                                            child: Text(
-                                            categorycubit.categoriesmodel!.data!.categories![i].name!,
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontSize: 22,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.white
-                                                ),
-                                              ),
-                                          ),
-                                        ]
-                                    ),
+                            return Container(
+                              height: 50,
+                              width:150,
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              margin: EdgeInsets.symmetric(horizontal: 5),
+                              decoration: BoxDecoration(
+                                color: mainColor,
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  categorycubit.categoriesmodel!.data!.categories![i].name!,
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white
                                   ),
-                                ],
+                                ),
                               ),
                             );
                           },

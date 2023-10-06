@@ -38,6 +38,34 @@ class FavScreen extends StatelessWidget {
           }
           else{
             return Scaffold(
+              appBar: AppBar(
+                title: const Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                         Icon(
+                            Icons.favorite_rounded,
+                          color: Colors.red,
+                        ),
+                         Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                          child: Text(
+                  "Favourite Books",
+                  style: TextStyle(
+                            fontSize: 25
+                  ),
+                ),
+                        ),
+                         Icon(
+                          Icons.favorite_rounded,
+                          color: Colors.red,
+                        ),
+                      ],
+                    )),
+                backgroundColor: mainColor,
+                elevation:0 ,
+                automaticallyImplyLeading: false,
+              ),
               body: Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
