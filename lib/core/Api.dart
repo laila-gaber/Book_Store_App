@@ -1,5 +1,4 @@
 class ApiConst{
-
   static const  String BASEURL = 'https://codingarabic.online/api';
   static const  String  SIGNUP = '/register';
   static const  String  SIGNIN = '/login';
@@ -21,7 +20,7 @@ class ApiConst{
   static const  String  SEARCH = '/products-search';
   static const  String  SHOWCHECKOUT = '/checkout';
   static const  String  ORDER = '/place-order';
-
+  static const  String  LOGOUT = '/logout';
 
 
 

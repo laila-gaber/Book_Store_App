@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:meta/meta.dart';
-import 'package:v_care_clinic/core/Api.dart';
+import 'package:v_care_clinic/core/api.dart';
 import 'package:v_care_clinic/core/cache_helper.dart';
 import 'package:v_care_clinic/screens/Profile_screen/model/edit_profile_model/Edit_profilemodel.dart';
 
@@ -22,7 +22,6 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   void editprofile({required String name,required String email,required String phone,
     required String city, required String address,}) {
     emit(EditProfileLoading());
-    print('ana dakhalt el update');
     DioHelper.postData(
         url:ApiConst.UPDATE,
         token: CacheHelper.getData(key: "token"),

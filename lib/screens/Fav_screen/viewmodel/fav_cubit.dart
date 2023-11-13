@@ -11,7 +11,7 @@ import 'package:v_care_clinic/screens/Fav_screen/model/add-fav_model/Addtofavmod
 import 'package:v_care_clinic/screens/Fav_screen/model/remove_from_fav_model/Removefromfav.dart';
 import 'package:v_care_clinic/screens/Fav_screen/model/show_fav_model/Show_fav_model.dart';
 
-import '../../../core/Api.dart';
+import '../../../core/api.dart';
 import '../../../core/dio_helper.dart';
 import '../model/show_fav2_model/show_fav2_model.dart';
 
@@ -30,22 +30,21 @@ class FavCubit extends Cubit<FavState> {
   GetAllFav()
   {
     emit(ShowFavLoading());
+    mysetfav={};
     DioHelper.getData(
       url: ApiConst.SHOWFAV,
       token: CacheHelper.getData(key: "token"),
     ).then((response){
-      //print(response.data);
       showFav2Model=ShowFav2Model.fromJson(response.data);
+      print('response\t');
+      print(response.data.toString());
       showFav2Model!.data!.data.forEach((element) {
         mysetfav.add(element.id);
       });
       print("list of favshow added $mysetfav");
-      //print(ShowFav2Model.fromJson(response.data));
-      //print(response.data['message']);
       emit(ShowFavSuccess());
     }).catchError((error)
     {
-      print("Error in Slider");
       print(" ${error.toString()}");
       if (error is DioError) {
         if (error.response != null) {
@@ -69,8 +68,6 @@ class FavCubit extends Cubit<FavState> {
       }
       emit(ShowFavFailure());
     });
-
-
   }
   AddFav(int product_id)
   {
@@ -83,22 +80,16 @@ class FavCubit extends Cubit<FavState> {
       },
       token: CacheHelper.getData(key: "token"),
     ).then((response){
-      print(response.data);
       addtofav=Addtofavmodel.fromJson(response.data);
-      showFav2Model!.data!.data.forEach((element) {
-        mysetfav.add(element.id);
-      });
-      print("list of favvvv added $mysetfav");
-      print(Addtofavmodel.fromJson(response.data));
-      print(response.data['message']);
       Fluttertoast.showToast(
         msg: "Added to favourite",
         backgroundColor: Colors.green,
       );
+      GetAllFav();
       emit(AddFavSuccess());
     }).catchError((error)
     {
-      print(" ${error.toString()}");
+      print("the error isss  ${error.toString()}");
       if (error is DioError) {
         if (error.response != null) {
           print(error.response!.data);
@@ -137,14 +128,6 @@ class FavCubit extends Cubit<FavState> {
     ).then((response){
       print(response.data);
       removefromfavmodel=Removefromfavmodel.fromJson(response.data);
-      showFav2Model!.data!.data.forEach((element) {
-        /*if(!favourites.contains(element))
-          {
-            favourites.add(element.id);
-            print("dakhalt");
-          }*/
-        mysetfav.remove(element.id);
-      });
       print("list of favvvv remove $mysetfav");
       print(Removefromfavmodel.fromJson(response.data));
       print(response.data['message']);
@@ -152,6 +135,7 @@ class FavCubit extends Cubit<FavState> {
         msg: "Removed from favourite",
         backgroundColor: Colors.green,
       );
+      GetAllFav();
       emit(RemoveFavSuccess());
     }).catchError((error)
     {

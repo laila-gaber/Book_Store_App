@@ -1,8 +1,10 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:v_care_clinic/core/Colors.dart';
+import 'package:lottie/lottie.dart';
+import 'package:v_care_clinic/core/app_colors.dart';
 
-import '../LoginScreen/view/SignInScreen.dart';
+
+import '../Login_screen/view/SignInScreen.dart';
 import '../register_screen/view/widget/register_screen_body.dart';
 
 class MyHome extends StatefulWidget {
@@ -28,6 +30,7 @@ class _MyHomeState extends State<MyHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: mainColor,
       body: Stack(
         children: [
           PageView(
@@ -35,9 +38,10 @@ class _MyHomeState extends State<MyHome> {
             onPageChanged: _updatePosition,
             children: [
               OnboardingScreen(
-                  Image.asset(
-                    'assets/img/book5.jpg',
-                      fit: BoxFit.fill
+                  SizedBox(
+                      child: Lottie.asset(
+                        'assets/animations/Animation7.json'
+                      )
                   ),
                   [
                     Text(
@@ -45,7 +49,7 @@ class _MyHomeState extends State<MyHome> {
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
-                        color: mainColor,
+                        color: primaryColor,
                         letterSpacing: 0.3,
                       ),
                       textAlign: TextAlign.center,
@@ -53,14 +57,23 @@ class _MyHomeState extends State<MyHome> {
                     SizedBox(
                       height: 30,
                     ),
-                  ]),
-              OnboardingScreen(Image.asset('assets/img/book10.jpg',fit: BoxFit.fill,), [
+                  ]
+              ),
+              OnboardingScreen(
+
+              SizedBox(
+              child: Lottie.asset(
+                  'assets/animations/Animation8.json',
+                fit: BoxFit.fill,
+              )
+              ),
+                [
                 Text(
                   "\nBrowse through an extensive collection of books and a diverse range of titles!",
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
-                    color: mainColor,
+                    color: primaryColor,
                     letterSpacing: 0.3,
                   ),
                   textAlign: TextAlign.center,
@@ -69,19 +82,22 @@ class _MyHomeState extends State<MyHome> {
                 SizedBox(
                   height: 20,
                 ),
-              ]),
+              ]
+              ),
               OnboardingScreen(
-                Image.asset(
-                    'assets/img/book3.jpg',
-                  fit: BoxFit.cover,
+                SizedBox(
+                    child: Lottie.asset(
+                        'assets/animations/Animation9.json',
+                      fit: BoxFit.fill,
+                    )
                 ),
                 [
                   Text(
-                    "\nAlso have a look at the best seller books",
+                    "\nReady?\nLet's Explore new books!",
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
-                      color: mainColor,
+                      color: primaryColor,
                       letterSpacing: 0.3,
                     ),
                     textAlign: TextAlign.center,
@@ -91,12 +107,12 @@ class _MyHomeState extends State<MyHome> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
+
                       OutlinedButton(
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => SignInScreen()),
+                            MaterialPageRoute(builder: (context) => SignInScreen()),
                           );
                         },
                         child: Text(
@@ -109,9 +125,13 @@ class _MyHomeState extends State<MyHome> {
                           ),
                         ),
                         style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(secondaryColor), // Set the background color to white
+                          elevation: MaterialStateProperty.all(4), // Set the elevation to your desired value
                           shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0))),
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
                         ),
                       ),
                       OutlinedButton(
@@ -132,9 +152,13 @@ class _MyHomeState extends State<MyHome> {
                           ),
                         ),
                         style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(secondaryColor), // Set the background color to white
+                          elevation: MaterialStateProperty.all(4), // Set the elevation to your desired value
                           shape: MaterialStateProperty.all(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0))),
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -146,6 +170,11 @@ class _MyHomeState extends State<MyHome> {
           Align(
               alignment: Alignment.bottomCenter,
               child: DotsIndicator(
+                decorator: DotsDecorator(
+                  color: Colors.white,
+                  activeColor: primaryColor,
+                  activeSize:Size.fromRadius(7)
+                ),
                 dotsCount: 3,
                 position: _currentPosition,
                 onTap: (double page) {
@@ -180,10 +209,13 @@ class OnboardingScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Card(
+                    shadowColor: primaryColor,
+                    color: Colors.white,
                     elevation: 10,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
                     child: image!,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
+                        borderRadius: BorderRadius.circular(200)),
                   ),
                 ),
               ),

@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:v_care_clinic/core/Api.dart';
+import 'package:v_care_clinic/core/api.dart';
 import 'package:v_care_clinic/screens/register_screen/RegisterModel/RegisterModel2.dart';
 import 'package:v_care_clinic/screens/register_screen/view_model/cubit/states.dart';
 
@@ -33,10 +33,6 @@ class RegisterCubit extends Cubit<RegisterStates> {
        CacheHelper.saveData(key:"token", value:value.data['data']['token']);
       print(CacheHelper.getData(key: 'token'));
       emit(RegisterSuccessState());
-      Fluttertoast.showToast(
-          msg: "succesfly",
-          backgroundColor: Colors.green
-      );
     }).catchError((errror){
       if(errror is DioException){
         print(errror.response?.data.toString());

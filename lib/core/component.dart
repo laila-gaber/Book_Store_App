@@ -1,15 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:v_care_clinic/core/SharedFunctions.dart';
+
+import '../../../../core/app_colors.dart';
+import '../../../../core/font.dart';
 
 Widget defaultFormField({
   required TextEditingController controller,
   required TextInputType type,
   required String? Function(String?)? validate,
   void Function(String)? onsubmit,
-  required String label,
+  required String label_text,
+  String? hint_text,
   IconData? prifex,
   int? maxline,
   void Function()? ontap,
@@ -20,7 +22,6 @@ Widget defaultFormField({
   void Function()? suffixpressed,
 }) =>
     TextFormField(
-// onTap:ontap ,
       enabled: isclickable,
       onChanged: onChange,
       obscureText: isPassword,
@@ -30,16 +31,11 @@ Widget defaultFormField({
       onFieldSubmitted: onsubmit,
       cursorColor: Colors.black,
       maxLines: maxline,
-
       decoration: InputDecoration(
-        fillColor: Colors.black,
-        hoverColor: Colors.black,
-        labelStyle: GoogleFonts.roboto(color: Colors.black),
-
-        hintStyle: GoogleFonts.roboto(
-          color: Colors.black,
-        ),
-
+        fillColor: primaryColor,
+        hoverColor: primaryColor,
+        labelStyle: Styles.INFORMFIELDSTYLE,
+        hintStyle: Styles.INFORMFIELDSTYLE,
         enabledBorder:
             OutlineInputBorder(borderSide: BorderSide(color: Colors.black)),
         focusedBorder:
@@ -50,7 +46,8 @@ Widget defaultFormField({
           ),
         ),
 //
-        labelText: (label),
+        labelText: (label_text),
+        hintText: hint_text,
         prefixIcon: Icon(prifex, color: Colors.black),
         suffixIcon: suffix != null
             ? IconButton(
@@ -62,109 +59,60 @@ Widget defaultFormField({
     );
 
 //bottom nav bar
-Widget CustomBottomAppBar({
-  required IconData pageIcon,
-  required String pageText,
-  required BuildContext pagecontext,
-  required Widget navscreen,
+Widget customElevatedButton({
+  required void Function()? onPressed,
+  required String text,
+  Color? backgroundcolor,
+  TextStyle? style,
 }) =>
-    BottomAppBar(
-      color: Colors.white,
-      // shape: CircularNotchedRectangle(),
-      // notchMargin: 0,
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.home,
-                ),
-                onPressed: () {
-                  navto(pagecontext, navscreen);
-                },
-              ),
-              Text(
-                'Home',
-                style: TextStyle(
-                  fontSize: 12,
-                ),
-              ),
-            ],
+    SizedBox(
+      width: 315,
+      height: 45,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+            primary: backgroundcolor ?? mainColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            elevation: 5.0),
+        child: Text(text, style: style ?? Styles.BUTTONTEXTSTYLE),
+      ),
+    );
+
+PreferredSizeWidget customAppBar({
+  String? text,
+  Color? appcolor,
+  bool? centeredtitle = false,
+  Widget? leading,
+  List<Widget>? actions,
+}) =>
+    AppBar(
+      backgroundColor: mainColor,
+      title: Text(text ?? "", style: Styles.BUTTONTEXTSTYLE),
+      leading: leading,
+      centerTitle: centeredtitle,
+      actions: actions ?? [],
+    );
+
+Widget customCardWidget({
+   required List<Widget>? children,
+}) =>
+    Padding(
+      padding: const EdgeInsets.only(right: 10.0),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(7)),
+        shadowColor: primaryColor,
+        elevation: 5,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: SizedBox(
+          width: 160,
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Column(
+              children: children ?? [],
+            ),
           ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.menu_book_sharp,
-                ),
-                onPressed: () {
-                 navto(pagecontext, navscreen);
-                },
-              ),
-              Text(
-                'Books',
-                style: TextStyle(
-                  fontSize: 12,
-                ),
-              ),
-            ],
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: Icon(Icons.favorite_rounded, color: Colors.red),
-                onPressed: () {
-                  navto(pagecontext, navscreen);
-                },
-              ),
-              Text(
-                'Favourite',
-                style: TextStyle(
-                  fontSize: 12,
-                ),
-              ),
-            ],
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.shopping_cart,
-                ),
-                onPressed: () {
-                  navto(pagecontext, navscreen);
-                },
-              ),
-              Text(
-                'Cart',
-                style: TextStyle(fontSize: 12, color: HexColor('#174068')),
-              ),
-            ],
-          ),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.account_box,
-                ),
-                onPressed: () {
-                  navto(pagecontext, navscreen);
-                },
-              ),
-              Text(
-                'Profile',
-                style: TextStyle(fontSize: 12, color: HexColor('#174068')),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );

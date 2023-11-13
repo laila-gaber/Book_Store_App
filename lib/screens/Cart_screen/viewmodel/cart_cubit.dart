@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:meta/meta.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:v_care_clinic/screens/Cart_screen/model/Remove_cart_model/remove_cart_model.dart';
 import 'package:v_care_clinic/screens/Cart_screen/model/add_to_cart_model/Addtocart.dart';
 import 'package:v_care_clinic/screens/Cart_screen/model/update_cart_model/Update_cart_model.dart';
 
-import '../../../core/Api.dart';
+import '../../../core/api.dart';
+import '../../../core/app_colors.dart';
 import '../../../core/cache_helper.dart';
 import '../../../core/dio_helper.dart';
 import '../model/show_cart_model/Show_car_model.dart';
@@ -38,7 +40,7 @@ class CartCubit extends Cubit<CartState> {
       addtocartmodel=Addtocartmodel.fromJson(response.data);
       print(response.data['message']);
       Fluttertoast.showToast(
-        msg: "Added Succesfully",
+        msg:"Added To Cart",
         backgroundColor: Colors.green,
       );
       emit(AddCartSuccess());
@@ -123,10 +125,6 @@ class CartCubit extends Cubit<CartState> {
     ).then((response){
       updateCartModel=UpdateCartModel.fromJson(response.data);
       print(response.data['message']);
-      Fluttertoast.showToast(
-        msg: "Updated Succesfully",
-        backgroundColor: Colors.green,
-      );
       emit(UpdateCartSuccess());
     }).catchError((error)
     {
@@ -168,10 +166,6 @@ class CartCubit extends Cubit<CartState> {
     ).then((response){
       removeCartModel=RemoveCartModel.fromJson(response.data);
       print(response.data['message']);
-      Fluttertoast.showToast(
-        msg: "Removed Successfully",
-        backgroundColor: Colors.green,
-      );
       emit(RemoveCartSuccess());
     }).catchError((error)
     {
@@ -198,5 +192,16 @@ class CartCubit extends Cubit<CartState> {
       }
       emit(RemoveCartFailure());
     });
+  }
+
+  void Clearcart ()
+  {
+    showCartModel!.data!.cartItems!.forEach((i) {
+      print("lol");
+     RemoveCart(i.itemId!.toInt());
+    });
+   Showcart();
+   emit(ClearCartSuccess());
+
   }
 }

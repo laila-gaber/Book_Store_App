@@ -13,7 +13,6 @@ import 'package:v_care_clinic/screens/Home_screen/view_model/BestSeller_view_mod
 import 'package:v_care_clinic/screens/Home_screen/view_model/Categories_view_model/categories_cubit.dart';
 import 'package:v_care_clinic/screens/Home_screen/view_model/New_Arrival_view_model/newarrival_cubit.dart';
 import 'package:v_care_clinic/screens/Home_screen/view_model/slider_view_model/slider_cubit.dart';
-import 'package:v_care_clinic/screens/LoginScreen/viewmodel/SignIncubit/SigninCubit.dart';
 import 'package:v_care_clinic/screens/Profile_screen/view/User_Profile_Screen.dart';
 import 'package:v_care_clinic/screens/Profile_screen/viewmodel/edit_profile/edit_profile_cubit.dart';
 import 'package:v_care_clinic/screens/Profile_screen/viewmodel/show_profile/show_profile_cubit.dart';
@@ -30,6 +29,7 @@ import 'core/cache_helper.dart';
 import 'core/dio_helper.dart';
 import 'screens/Books_screen/view/Books_screen.dart';
 import 'screens/BottomNav.dart';
+import 'screens/Login_screen/viewmodel/SignIncubit/SigninCubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

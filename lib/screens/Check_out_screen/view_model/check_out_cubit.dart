@@ -1,13 +1,17 @@
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:meta/meta.dart';
-import 'package:v_care_clinic/core/Api.dart';
+import 'package:quickalert/quickalert.dart';
+import 'package:v_care_clinic/core/api.dart';
+import 'package:v_care_clinic/screens/Cart_screen/viewmodel/cart_cubit.dart';
 import 'package:v_care_clinic/screens/Check_out_screen/model/order_model/Order_model.dart';
 import 'package:v_care_clinic/screens/Check_out_screen/model/show_chekout_model/Show_check_out_model.dart';
 
+import '../../../core/app_colors.dart';
 import '../../../core/cache_helper.dart';
 import '../../../core/dio_helper.dart';
 
@@ -18,6 +22,7 @@ class CheckOutCubit extends Cubit<CheckOutState> {
   static CheckOutCubit get(context) => BlocProvider.of(context);
   ShowCheckOutModel?showCheckOutModel;
   OrderModel?orderModel;
+  var CartCubit;
   Showorder()
   {
     emit(CheckOutLoading());
@@ -58,7 +63,6 @@ class CheckOutCubit extends Cubit<CheckOutState> {
 
 
   }
-
   void Order({required String name,required String email,required String phone,
     required String city, required String address,}) {
     emit(OrderLoading());
@@ -98,4 +102,21 @@ class CheckOutCubit extends Cubit<CheckOutState> {
     });
 
   }
+
+  void showPopup(BuildContext context) {
+    QuickAlert.show(
+      context:context,
+      autoCloseDuration: const Duration(seconds: 3), // Auto close after 2 seconds
+      title: "Order Placed Succesfully",
+      backgroundColor: Colors.white,
+      titleColor: Colors.green,
+      animType: QuickAlertAnimType.slideInUp,
+      type: QuickAlertType.success,
+      disableBackBtn: true,
+      showConfirmBtn: false,
+      //onConfirmBtnTap:navto()
+    );
+
+  }
 }
+

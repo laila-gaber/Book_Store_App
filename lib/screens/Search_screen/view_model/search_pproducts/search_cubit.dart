@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:meta/meta.dart';
 
-import '../../../../core/Api.dart';
+import '../../../../core/api.dart';
 import '../../../../core/cache_helper.dart';
 import '../../../../core/dio_helper.dart';
 import '../../model/search_model/search_model.dart';

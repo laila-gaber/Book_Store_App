@@ -16,3 +16,4 @@ class UpdateCartFailure extends CartState {}
 class RemoveCartLoading extends CartState {}
 class RemoveCartSuccess extends CartState {}
 class RemoveCartFailure extends CartState {}
+class ClearCartSuccess extends CartState {}
