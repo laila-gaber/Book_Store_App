@@ -1,14 +1,14 @@
 the 'Book Store App' 📖📱. Whether you're a book enthusiast or simply looking for a smooth book-shopping experience, this app has it all! Here's a glimpse of what you can do:
 
-✅ Log in or sign up to explore a world of books.<br></br>
-✅ Browse a diverse collection of books.<br></br>
-✅ Easily search for specific titles.<br></br>
-✅ Add and remove books from your favorites.<br></br>
-✅ Create and manage your shopping cart.<br></br>
-✅ Streamline the checkout process.<br></br>
-✅ Place your orders seamlessly.<br></br>
-✅ Personalize your profile information.<br></br>
-✅ Log out when you're done.<br></br> <br></br>
+✅ Log in or sign up to explore a world of books.
+✅ Browse a diverse collection of books.
+✅ Easily search for specific titles.
+✅ Add and remove books from your favorites.
+✅ Create and manage your shopping cart.
+✅ Streamline the checkout process.
+✅ Place your orders seamlessly.
+✅ Personalize your profile information.
+✅ Log out when you're done.
 
 And the experience doesn't stop there! The app features an engaging Lottie splash screen and an interactive onboarding screen to guide you through the journey.
 
