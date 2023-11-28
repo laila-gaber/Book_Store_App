@@ -22,7 +22,7 @@ What makes this project even more special is the tech behind it:
 - 🔷 Cubit state management for efficient state handling.
 - 🔷 API integration using Dio for real-time data access.
 
-Demo:
+## Demo
 https://github.com/laila-gaber/Book_Store_App/assets/68399601/08c72c75-0894-47f0-a68d-7ec7273f1250
 
 
