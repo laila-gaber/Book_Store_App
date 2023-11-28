@@ -1,16 +1,26 @@
-# week2
+the 'Book Store App' 📖📱. Whether you're a book enthusiast or simply looking for a smooth book-shopping experience, this app has it all! Here's a glimpse of what you can do:
 
-A new Flutter project.
+✅ Log in or sign up to explore a world of books.
+✅ Browse a diverse collection of books.
+✅ Easily search for specific titles.
+✅ Add and remove books from your favorites.
+✅ Create and manage your shopping cart.
+✅ Streamline the checkout process.
+✅ Place your orders seamlessly.
+✅ Personalize your profile information.
+✅ Log out when you're done.
 
-## Getting Started
+And the experience doesn't stop there! The app features an engaging Lottie splash screen and an interactive onboarding screen to guide you through the journey.
 
-This project is a starting point for a Flutter application.
+What makes this project even more special is the tech behind it:
 
-A few resources to get you started if this is your first Flutter project:
+🔷 MVVM architecture for a structured and organized codebase.
+🔷 Cubit state management for efficient state handling.
+🔷 API integration using Dio for real-time data access.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Demo:
+https://github.com/laila-gaber/Book_Store_App/assets/68399601/08c72c75-0894-47f0-a68d-7ec7273f1250
+
+
+
